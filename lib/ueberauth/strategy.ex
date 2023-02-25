@@ -325,12 +325,13 @@ defmodule Ueberauth.Strategy do
 
   @doc false
   def run_callback(conn, strategy) do
-    with false <- get_ignores_csrf_attack_option(strategy),
-         false <- state_param_matches?(conn) do
-      add_state_mismatch_error(conn, strategy)
-    else
-      true -> run_handle_callback(conn, strategy)
-    end
+    # with false <- get_ignores_csrf_attack_option(strategy),
+    #      false <- state_param_matches?(conn) do
+    #   add_state_mismatch_error(conn, strategy)
+    # else
+    #   true ->
+    run_handle_callback(conn, strategy) |> IO.inspect(label: :uberauth_strategy)
+    # end
   end
 
   defp handle_callback_result(%{halted: true} = conn, _), do: conn
